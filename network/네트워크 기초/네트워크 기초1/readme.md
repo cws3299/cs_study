@@ -8,7 +8,7 @@
 
 (https://m.blog.naver.com/yeopil-yoon/221286967971)
 
-(https://suhwanc.tistory.com/105)
+(https://suhwanc.tistory.com/100?category=781986)
 
  (https://m.blog.naver.com/PostView.nhn?blogId=neoul0&logNo=120011890773&proxyReferer=https:%2F%2Fwww.google.com%2F)
 
