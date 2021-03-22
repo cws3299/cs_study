@@ -86,6 +86,7 @@
   - 커널
     - 가상 메모리 공간 체크 및 프로세스 상태 전이 과정을 통해 created된 프로세스가 ready로 갈지 suspended ready로 갈지 정의됨
     - 메모리가 있다면 ready , 없다면 suspended ready
+  
 - ready state
   - 프로세서 외에 다른 모든 자원을 할당 받은 상태
     - 프로세서 할당 대기 상태
@@ -93,6 +94,7 @@
     - 프로세서 (cpu)
   - Dispatch (or Schedule)
     - ready state -> running state
+  
 - running state
   - 작업을 실행중인 상태 + 프로세서도 할당 받음
   - 이 상태를  벗어나는 경우
@@ -101,3 +103,63 @@
        - 프로세서 스케줄링 이나 타임슬롯에 의해서 발생
     2. asleep상태로 가는 경우
        - 은행에 갔는데 필요한 서류를 가져오지 않은 경우 -> 나는 서류를 가져오는 동안 잠시 은행 내 창구를 대기시켜두는 것을 의미함
+  
+- Blocked / Asleep State
+
+  ![20210322_191157](20210322_191157.png)
+
+- asleep 상태에서는 running으로 바로 가지 못하고 다시 ready상태로 가서 작업을 기다림 (추가 데이터가 필요할 경우에 다시 데이터를 받는 경우 asleep에서 ready로)
+
+
+
+- Suspended State	
+  - 메모리를 할당 받지 못한(빼앗긴) 상태
+  - suspended blocked은 메모리 공간마저 뺏긴 상태
+  - 방금전까지 했던 작업의 상태를 저장해 놓기 위해서 memory image를 swap device에 보관 (방금까지 했던 상태를 사진형식으로 찍어 놓아서 보관함)
+  - swap device는 하드 디스크라고 생각하면 됨
+
+![20210322_191845](20210322_191845.png)
+
+
+
+- Terminated / Zombie State
+  - 프로세스 수행이 끝난 상태
+  - 모든 자원을 반납 후,
+  - 커널 내에 일부 PCB 정보만 남아있는 상태
+    - 이후 프로세스 관리를 위해 정보 수집
+  - running에서 굳이 terminated를 들렸다 가는 이유는?
+    - 다음에도 비슷한 작업이 올 경우 어느정도 시간과 공간이 걸릴지를 파악하는 역할
+    - 파악 한 후에 삭제함
+
+![20210322_192333](20210322_192333.png)
+
+
+
+![20210322_192542](20210322_192542.png)
+
+
+
+### 인터럽트
+
+- 예상하지 못한 , 외부에서 발생한 이벤트
+  - I/O interrupt : 마우스 클릭 등
+  - Clock interrupt : cpu의 클락 발생시 생기는 interrupt
+  - Console interrupt
+  - Program check interrupt
+  - Machine check interrupt
+  - Inter-process interrupt
+  - System call interrupt
+
+![20210322_193106](20210322_193106.png)
+
+![20210322_193503](20210322_193503.png)
+
+![20210322_193630](20210322_193630.png)
+
+![20210322_193657](20210322_193657.png)
+
+- cpu가 메모리의 작업을 할때는 메모리의 값을 레지스터에 올린 후 작업을 함
+- cpu안에도 저장이 되지만 , 메모리 안에도 저장이 됨 (context는 두군데에 저장)
+- cpu register는 메모리에 저장이 된다
+- context switching은 매우 자주 일어남. os성능에 큰 영향을 줘서 우리는 줄이는게 좋다.
+  - 이를 해결하기 위해 우리는 thread를 사용한다
